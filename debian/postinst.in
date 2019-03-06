@@ -688,7 +688,9 @@ case "$1" in
           if [ "$RET" = true ]; then
             FORCE_EXTRA_REMOVABLE="--force-extra-removable"
           fi
-          NO_NVRAM="$(no_nvram_arg)"
+#         NO_NVRAM="$(no_nvram_arg)"
+	  # Lee: Force 'No NVRAM' since the firmware does not support adaptions
+          NO_NVRAM="--no-nvram"
           run_grub_install --target="$target" "$FORCE_EXTRA_REMOVABLE" "$NO_NVRAM"
         fi
 

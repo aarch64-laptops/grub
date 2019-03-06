@@ -141,7 +141,7 @@ linux_entry ()
   message="$(gettext_printf "Loading Linux %s ..." ${version})"
   sed "s/^/$submenu_indentation/" << EOF
 	echo	'$(echo "$message" | grub_quote)'
-	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args}
+	linux	${rel_dirname}/${basename} root=${linux_root_device_thisversion} ro ${args} efi=novamap ignore_loglevel clk_ignore_unused pd_ignore_unused console=tty0
 EOF
   if test -n "${initrd}" ; then
     # TRANSLATORS: ramdisk isn't identifier. Should be translated.
@@ -153,6 +153,11 @@ EOF
     sed "s/^/$submenu_indentation/" << EOF
 	echo	'$(echo "$message" | grub_quote)'
 	initrd	$(echo $initrd_path)
+EOF
+    message="$(gettext_printf "Loading device tree ...")"
+    sed "s/^/$submenu_indentation/" << EOF
+	echo	'$(echo "$message" | grub_quote)'
+	devicetree /boot/laptop.dtb
 EOF
   fi
   sed "s/^/$submenu_indentation/" << EOF
